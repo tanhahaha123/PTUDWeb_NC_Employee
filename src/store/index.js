@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import moment from 'moment'
-// import { router } from "../routes/routes";
+import { router } from "../routes/routes";
 import { alert } from './alert.module';
 import { account } from './account.module';
 
@@ -16,6 +16,7 @@ axiosApiInstance.interceptors.request.use(
     let a= JSON.parse(localStorage.getItem("user"));
     console.log("Request: ",a);
     //const keys = JSON.parse(value)
+    console.log("Here acesstoken", a.response.accessToken);
     if(a){
       config.headers = { 
         "x-access-token": a.response.accessToken
@@ -34,7 +35,6 @@ axiosApiInstance.interceptors.response.use((response) => {
   const originalRequest = error.config;
   console.log("originalRequest: ", originalRequest);
   if (error.response.status === 401 && !originalRequest._retry) {
-    //console.log("Here");
     originalRequest._retry = true;
     const payload = {
       "AccessToken": JSON.parse(localStorage.getItem("user")).response.accessToken,
@@ -42,7 +42,7 @@ axiosApiInstance.interceptors.response.use((response) => {
     }
     let response;
     try {
-      response = await axios.post('https://bank25.herokuapp.com/api/auth/refresh-token',payload);
+      response = await axios.post('https://bank25.herokuapp.com/api/auth/refresh-token/employee',payload);
       //console.log(response);
     }
     catch(e){
@@ -50,21 +50,11 @@ axiosApiInstance.interceptors.response.use((response) => {
       router.push("login");
       // console.log("Log: ", e.response);
     }
-    
-    //console.log("AccessToken: ", accessToken);
-    // if(response.data.err){
-    //   // this.$store.dispatch()
-    //   router.push("login");
-    // }else{
-    //   // commit('ADD_DEBT_REMINDER_SUCCESS',respone.data);
-    //   // router.push("debtReminder");
-    // }        
     const localStore = JSON.parse(localStorage.getItem("user"));
     localStore.response.accessToken = response.data.AccessToken
     //console.log("localStore: ", localStore.response);
     localStorage.setItem("user", JSON.stringify(localStore));  
-    //axios.defaults.headers.common['x-access-token'] = accessToken.data;
-    
+
     return axiosApiInstance(originalRequest);
   }
   return Promise.reject(error);
