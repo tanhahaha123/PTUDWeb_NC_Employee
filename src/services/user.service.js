@@ -24,7 +24,7 @@ function login(username, password, captcha) {
 
   // console.log("Captcha: ", captcha);
 
-  return fetch(`https://bank25.herokuapp.com/api/auth/signin/admin`, requestOptions)
+  return fetch(`https://bank25.herokuapp.com/api/auth/signin/employee`, requestOptions)
     .then(handleResponse)
     .then(user => {
       // login successful if there's a jwt token in the response
