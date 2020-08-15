@@ -1,9 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import moment from 'moment'
+// import { router } from "../routes/routes";
+import { alert } from './alert.module';
+import { account } from './account.module';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 import axios from 'axios';
+
+const axiosApiInstance = axios.create();
 
 export default new Vuex.Store({
   state: {
@@ -222,5 +227,7 @@ export default new Vuex.Store({
     }
   },
   modules: {
+    alert,
+    account
   }
 })

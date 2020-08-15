@@ -16,10 +16,11 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from "vue";
 import VueRouter from "vue-router";
+import veeValidate from "vee-validate";
 import App from "./App";
 
 // router setup
-import routes from "./routes/routes";
+import { router } from "./routes/routes";
 
 // Plugins
 import GlobalComponents from "./globalComponents";
@@ -33,12 +34,6 @@ import Chartist from "chartist";
 
 import store from './store';
 
-// configure router
-const router = new VueRouter({
-  routes, // short for routes: routes
-  linkExactActiveClass: "nav-item active"
-});
-
 Vue.prototype.$Chartist = Chartist;
 
 Vue.use(VueRouter);
@@ -46,6 +41,7 @@ Vue.use(MaterialDashboard);
 Vue.use(GlobalComponents);
 Vue.use(GlobalDirectives);
 Vue.use(Notifications);
+Vue.use(veeValidate);
 
 /* eslint-disable no-new */
 new Vue({
