@@ -16,15 +16,6 @@
         </md-button>
 
         <div class="md-collapse">
-          <div class="md-autocomplete">
-            <md-autocomplete
-              class="search"
-              v-model="selectedEmployee"
-              :md-options="employees"
-            >
-              <label>Search...</label>
-            </md-autocomplete>
-          </div>
           <md-list>
             <md-list-item href="#/">
               <i class="material-icons">dashboard</i>
@@ -35,19 +26,6 @@
               <a
                 class="md-list-item-router md-list-item-container md-button-clean dropdown"
               >
-                <div class="md-list-item-content">
-                  <drop-down>
-                    <md-button
-                      slot="title"
-                      class="md-button md-just-icon md-simple"
-                      data-toggle="dropdown"
-                    >
-                      <md-icon>notifications</md-icon>
-                      <p class="hidden-lg hidden-md">Notifications</p>
-                    </md-button>
-                    <ul class="dropdown-menu dropdown-menu-right"></ul>
-                  </drop-down>
-                </div>
               </a>
             </li>
 
@@ -74,8 +52,6 @@
                       <p class="hidden-lg hidden-md">Profile</p>
                     </md-button>
                     <ul class="dropdown-menu dropdown-menu-right">
-                      <li><a href="#">Trang cá nhân</a></li>
-                      <li><a href="#">Cài đặt</a></li>
                       <li><a href="#" @click="LogOut">Đăng xuất</a></li>
                     </ul>
                   </drop-down>
@@ -100,7 +76,6 @@ export default {
     return {
       userInfo: null,
       selectedEmployee: null,
-      employees: ["Jim Halpert"]
     };
   },
   methods: {

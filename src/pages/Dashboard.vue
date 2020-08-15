@@ -67,28 +67,6 @@
           </template>
         </stats-card>
       </div>
-      <div
-        class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-50"
-      >
-        <stats-card data-background-color="red">
-          <template slot="header">
-            <a href="#/notifications">
-              <md-icon>forward</md-icon>
-            </a>
-          </template>
-
-          <template slot="content">
-            <md-icon>notifications</md-icon>
-            <h3 class="title">Thông báo</h3>
-          </template>
-
-          <template slot="footer">
-            <div class="stats">
-              Xem các thông báo
-            </div>
-          </template>
-        </stats-card>
-      </div>
       <!-- <div class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-50"></div> -->
     </div>
   </div>
