@@ -1,9 +1,74 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import moment from 'moment'
+// import { router } from "../routes/routes";
+import { alert } from './alert.module';
+import { account } from './account.module';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 import axios from 'axios';
+
+const axiosApiInstance = axios.create();
+
+// Request
+axiosApiInstance.interceptors.request.use(
+  async config => {
+    let a= JSON.parse(localStorage.getItem("user"));
+    console.log("Request: ",a);
+    //const keys = JSON.parse(value)
+    if(a){
+      config.headers = { 
+        "x-access-token": a.response.accessToken
+      }
+    }
+    return config;
+  },
+  error => {
+    Promise.reject(error)
+});
+
+// Response
+axiosApiInstance.interceptors.response.use((response) => {
+  return response
+}, async function (error) {
+  const originalRequest = error.config;
+  console.log("originalRequest: ", originalRequest);
+  if (error.response.status === 401 && !originalRequest._retry) {
+    //console.log("Here");
+    originalRequest._retry = true;
+    const payload = {
+      "AccessToken": JSON.parse(localStorage.getItem("user")).response.accessToken,
+      "RefreshToken": JSON.parse(localStorage.getItem("user")).response.refreshToken
+    }
+    let response;
+    try {
+      response = await axios.post('https://bank25.herokuapp.com/api/auth/refresh-token',payload);
+      //console.log(response);
+    }
+    catch(e){
+      localStorage.removeItem("user");
+      router.push("login");
+      // console.log("Log: ", e.response);
+    }
+    
+    //console.log("AccessToken: ", accessToken);
+    // if(response.data.err){
+    //   // this.$store.dispatch()
+    //   router.push("login");
+    // }else{
+    //   // commit('ADD_DEBT_REMINDER_SUCCESS',respone.data);
+    //   // router.push("debtReminder");
+    // }        
+    const localStore = JSON.parse(localStorage.getItem("user"));
+    localStore.response.accessToken = response.data.AccessToken
+    //console.log("localStore: ", localStore.response);
+    localStorage.setItem("user", JSON.stringify(localStore));  
+    //axios.defaults.headers.common['x-access-token'] = accessToken.data;
+    
+    return axiosApiInstance(originalRequest);
+  }
+  return Promise.reject(error);
+});
 
 export default new Vuex.Store({
   state: {
@@ -127,18 +192,18 @@ export default new Vuex.Store({
     },
     //lay lich su nhan tien
     async getReceiveHis(ctx,stk){
-      const respone=await axios.get('http://localhost:3000/api/internal/transaction/ReceiveTransaction/'+stk);
+      const respone=await axiosApiInstance.get('https://bank25.herokuapp.com/api/internal/transaction/ReceiveTransaction/'+stk);
       ctx.commit('GET_RECEIVE_HISTORY',Object.values(respone.data));
     },
     //lay lich su chuyen khoan
     async getTranferHis(ctx,stk){
-      const respone=await axios.get('http://localhost:3000/api/internal/transaction/TranferTransaction/'+stk);
+      const respone=await axiosApiInstance.get('https://bank25.herokuapp.com/api/internal/transaction/TranferTransaction/'+stk);
       console.log(respone);
       ctx.commit('GET_TRANFER_HISTORY',Object.values(respone.data));
     },
     //lay lich su nhac no
     async getLoanHis(ctx,stk){
-      const respone=await axios.get('http://localhost:3000/api/internal/transaction/LoanTransaction/'+stk);
+      const respone=await axiosApiInstance.get('https://bank25.herokuapp.com/api/internal/transaction/LoanTransaction/'+stk);
       ctx.commit('GET_LOAN_HISTORY',Object.values(respone.data));
     },
     //lay chuoi tim kiem lich su chuyen khoan
@@ -177,7 +242,7 @@ export default new Vuex.Store({
         "GhiChu":input.note
     }
     console.log(rowTaiKhoanKhachHang);
-      let respone=await axios.post('http://localhost:3000/api/internal/accountuser/AddUserAccount',rowTaiKhoanKhachHang).then(response => { 
+      let respone=await axiosApiInstance.post('https://bank25.herokuapp.com/api/internal/accountuser/AddUserAccount',rowTaiKhoanKhachHang).then(response => { 
         console.log(response)
       })
       .catch(error => {
@@ -196,12 +261,12 @@ export default new Vuex.Store({
         "TenNganHang": input.phone,
         "SoTien": input.money
       }
-      let ThongTinSTK=await axios.get("http://localhost:3000/api/internal/accountbank/detail/"+input.accountNumber)
+      let ThongTinSTK=await axiosApiInstance.get("https://bank25.herokuapp.com/api/internal/accountbank/detail/"+input.accountNumber)
       console.log(rowThongTinGuiTien);
       console.log(ThongTinSTK.data);
       console.log(ThongTinSTK.data[0].LoaiTaiKhoan);
       if(ThongTinSTK.data[0].LoaiTaiKhoan=="thanh toán"){
-        let respone=await axios.post('http://localhost:3000/api/internal/paymentaccount/UpdateBalance',rowThongTinGuiTien).then(response => { 
+        let respone=await axiosApiInstance.post('https://bank25.herokuapp.com/api/internal/paymentaccount/UpdateBalance',rowThongTinGuiTien).then(response => { 
           console.log(response)
         })
         .catch(error => {
@@ -210,7 +275,7 @@ export default new Vuex.Store({
         });
       }
       if(ThongTinSTK.data[0].LoaiTaiKhoan=="tiết kiệm"){
-        let respone=await axios.post('http://localhost:3000/api/internal/savingaccount/UpdateBalance',rowThongTinGuiTien).then(response => { 
+        let respone=await axiosApiInstance.post('https://bank25.herokuapp.com/api/internal/savingaccount/UpdateBalance',rowThongTinGuiTien).then(response => { 
           console.log(response)
         })
         .catch(error => {
@@ -222,5 +287,7 @@ export default new Vuex.Store({
     }
   },
   modules: {
+    alert,
+    account
   }
 })
