@@ -6,7 +6,6 @@ import DashboardLayout from "@/pages/Layout/DashboardLayout.vue";
 import Dashboard from "@/pages/Dashboard.vue";
 import AccountCreate from "@/pages/AccountCreate.vue";
 import MoneyTranfer from "@/pages/MoneyTranfer.vue";
-import Notifications from "@/pages/Notifications.vue";
 import TransactionsHistory from "@/pages/TransactionsHistory.vue";
 
 // Authentication for employee
@@ -32,11 +31,6 @@ const routes = [
         path: "moneyTranfer",
         name: "Money Tranfer",
         component: MoneyTranfer
-      },
-      {
-        path: "notifications",
-        name: "Notifications",
-        component: Notifications
       },
       {
         path: "transactions",

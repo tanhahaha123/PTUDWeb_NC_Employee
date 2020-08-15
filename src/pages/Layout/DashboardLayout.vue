@@ -19,10 +19,6 @@
         <md-icon>attach_money</md-icon>
         <p>Chuyển tiền</p>
       </sidebar-link>
-      <sidebar-link to="/notifications">
-        <md-icon>notifications</md-icon>
-        <p>Thông báo</p>
-      </sidebar-link>
       <sidebar-link to="/transactions">
         <md-icon>receipt_long</md-icon>
         <p>Lịch sử giao dịch</p>
