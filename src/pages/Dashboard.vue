@@ -4,7 +4,7 @@
       <div
         class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-50"
       >
-        <stats-card data-background-color="green">
+        <stats-card data-background-color="orange">
           <template slot="header">
             <a href="#/accountCreate">
             <md-icon>forward</md-icon>
@@ -26,7 +26,7 @@
       <div
         class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-50"
       >
-        <stats-card data-background-color="blue">
+        <stats-card data-background-color="orange">
           <template slot="header">
             <a href="#/moneyTranfer">
               <md-icon>forward</md-icon>
