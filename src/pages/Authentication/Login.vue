@@ -8,7 +8,7 @@
             class="md-layout-item md-size-33 md-small-size-66 md-xsmall-size-100 md-medium-size-40 md-auto"
           >
             <form @submit.prevent="handleSubmit">
-              <login-card header-color="green">
+              <login-card header-color="orange">
                 <h4 slot="title" class="card-title">Đăng nhập</h4>
                 <!-- Login Social -->
                 <md-button
@@ -86,7 +86,7 @@
                   <md-button
                     style="width: 100%"
                     :disabled="status.loggingIn"
-                    class="md-primary md-success"
+                    class="md-warning"
                     type="submit"
                   >
                     Đăng nhập
@@ -164,7 +164,7 @@ export default {
     ...mapState("alert", ["type", "message"]),
     headerStyle() {
       return {
-        backgroundImage: `linear-gradient(360deg,#e9fbcf 10%,#1d7d8e 360%)`
+        backgroundImage: `linear-gradient(360deg,#F4CC70 10%,#DE7A22 360%)`
       };
     }
   },
