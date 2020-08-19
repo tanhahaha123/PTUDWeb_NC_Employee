@@ -3,7 +3,7 @@
     <div class="md-layout">
       <div class="md-layout-item">
         <md-card class="md-card-plain">
-          <md-card-header data-background-color="green">
+          <md-card-header data-background-color="orange">
             <h4 class="title">Bản thông tin</h4>
             <p class="category">
               Điền thông tin cần thiết để chuyển tiền
