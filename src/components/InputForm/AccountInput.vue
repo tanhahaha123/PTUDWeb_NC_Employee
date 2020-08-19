@@ -93,7 +93,7 @@
               <label>Nhập lại mật khẩu</label>
               <md-input type="text" v-model="input.rePassword"></md-input>
               <span class="md-error" v-if="!$v.input.rePassword.required">Nhập lại mật khẩu</span>
-              <span class="md-error" v-else-if="!$v.input.rePassword.sameAsPassword">Mật khẩu không giốn</span>
+              <span class="md-error" v-else-if="!$v.input.rePassword.sameAsPassword">Mật khẩu không giống</span>
             </md-field>
           </div>
           <div class="md-layout-item md-small-size-100 md-size-100">
