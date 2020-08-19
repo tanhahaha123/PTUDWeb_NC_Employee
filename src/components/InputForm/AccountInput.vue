@@ -110,7 +110,7 @@
             </md-field>
           </div>
           <div class="md-layout-item md-size-100 text-right">
-            <md-button class="md-raised md-success" type="submit" >Tạo tài khoản</md-button>
+            <md-button class="md-raised md-warning" type="submit" >Tạo tài khoản</md-button>
           </div>
         </div>
       </md-card-content>
